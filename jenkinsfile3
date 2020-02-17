@@ -44,9 +44,6 @@ pipeline {
     
     //Version 2
 
-  environment {
-        DOCKERHUB_CREDS = credentials('dockerhub')
-      }
 	  
   stage('Push Images To DockerHUb') {
   steps {
