@@ -22,7 +22,8 @@ pipeline {
    stage('Git Clone') { 
    steps {
       // Get some code from a GitHub repository
-      git 'https://github.com/walidsaad/maven-jenkins-pipeline.git'
+      //git 'https://github.com/walidsaad/maven-jenkins-pipeline.git'
+      git 'https://hub.docker.com/repository/docker/getdevops/tomcat-maven'
    }
    }     
    stage('Build Docker Maven Image') {
@@ -38,6 +39,21 @@ pipeline {
    sh "docker run --rm -d -v /home/stagiaire/.m2:/root/.m2 -w /app/training-webapp/ --name test-maven  ${MAVEN_IMAGE_NAME}:${DOCKER_TAG} mvn clean install"
    }
    }
+    stage('Push Images To DockerHUb'){
+    steps{
+    echo "Login to Docker HUB"
+    sh "docker login -u ${DOCKER_USR} -p ${DOCKER_PSW}"
+    echo "Push Maven Image vers DockerHUb"
+    sh "docker tag ${MAVEN_IMAGE_NAME}:${DOCKER_TAG} ${DOCKER_REG}/${MAVEN_IMAGE_NAME}:${DOCKER_TAG}"
+    sh "docker push ${DOCKER_REG}/${MAVEN_IMAGE_NAME}:${DOCKER_TAG}"
+    echo "Push Tomcat Image vers DockerHUb"
+    sh "docker tag ${TOMCAT_IMAGE_NAME}:${DOCKER_TAG} ${DOCKER_REG}/${TOMCAT_IMAGE_NAME}:${DOCKER_TAG}"
+    sh "docker push ${DOCKER_REG}/${TOMCAT_IMAGE_NAME}:${DOCKER_TAG}"
+   
+    docker tag local-image:appMavenTomcat new-repo:appMavenTomcat
+    docker push getdevops/tomc at-maven:tagname
+    }
+    }
     stage('Deploy Artifcat') {
     steps {
       // Run the tomcat deploy
