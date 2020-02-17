@@ -50,8 +50,8 @@ pipeline {
     sh "docker tag ${TOMCAT_IMAGE_NAME}:${DOCKER_TAG} ${DOCKER_REG}/${TOMCAT_IMAGE_NAME}:${DOCKER_TAG}"
     sh "docker push ${DOCKER_REG}/${TOMCAT_IMAGE_NAME}:${DOCKER_TAG}"
    
-    docker tag local-image:appMavenTomcat new-repo:appMavenTomcat
-    docker push getdevops/tomc at-maven:tagname
+    //docker tag local-image:appMavenTomcat new-repo:appMavenTomcat
+    //docker push getdevops/tomc at-maven:tagname
     }
     }
     stage('Deploy Artifcat') {
