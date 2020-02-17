@@ -23,7 +23,7 @@ pipeline {
    steps {
       // Get some code from a GitHub repository
       //git 'https://github.com/walidsaad/maven-jenkins-pipeline.git'
-      git 'https://hub.docker.com/repository/docker/getdevops/tomcat-maven'
+      git 'https://github.com/saliouDevOps/maven-jenkins-pipeline/tree/saliouDevOps-patch-1'
    }
    }     
    stage('Build Docker Maven Image') {
